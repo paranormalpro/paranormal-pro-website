@@ -5,24 +5,13 @@
     <title>Paranormal Pro | Operational Investigation Platform</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Inter font (your CSS uses "Inter") -->
+    <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- ✅ FAILSAFE: prevents the page from ever showing as white if CSS fails to load -->
-    <style>
-        body {
-            margin: 0;
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0f1419;
-            color: #e6edf3;
-            line-height: 1.6;
-        }
-    </style>
-
-    <!-- ✅ MAIN STYLESHEET (most reliable relative path + cache-buster) -->
-    <link rel="stylesheet" href="./style.css?v=3">
+    <!-- Main stylesheet (cache-busted) -->
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
@@ -35,6 +24,7 @@
 </header>
 
 <nav class="command-nav">
+    <a href="index.html" aria-current="page">Home</a>
     <a href="about.html">About</a>
     <a href="tools.html">Investigation Workflow</a>
     <a href="command-center.html">Command Center</a>
@@ -51,7 +41,7 @@
 <section class="operational-summary">
     <h2>Operational Summary</h2>
     <p>
-        Paranormal Pro is a structured, synchronized investigation system designed
+        Paranormal Pro is a structured, synchronized investigation system designed 
         for disciplined documentation, environmental accountability, and AI-assisted evaluation.
     </p>
     <div class="status-line">
