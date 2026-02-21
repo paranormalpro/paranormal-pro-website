@@ -72,13 +72,14 @@ footer {
     animation-delay: 240ms;
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto;
-    }
+/* ===== HEADER CYAN SCAN ===== */
+
+@keyframes ppHeaderScan {
+    0%   { transform: translateX(-140%) skewX(-18deg); opacity: 0; }
+    12%  { opacity: 0.22; }
+    50%  { opacity: 0.18; }
+    88%  { opacity: 0.22; }
+    100% { transform: translateX(140%) skewX(-18deg); opacity: 0; }
 }
 
 /* ===== COMMAND HEADER ===== */
@@ -88,11 +89,41 @@ footer {
     padding: 84px 20px 74px;
     text-align: center;
     border-bottom: 1px solid #1f2a36;
+
+    /* scan overlay safety */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Soft scan overlay */
+.command-header::after {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -60%;
+    width: 55%;
+    height: 140%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 194, 255, 0.08),
+        rgba(0, 194, 255, 0.18),
+        rgba(0, 194, 255, 0.08),
+        transparent
+    );
+
+    filter: blur(1px);
+    pointer-events: none;
+
+    animation: ppHeaderScan 7.5s ease-in-out infinite;
 }
 
 .command-header .header-content {
     max-width: 920px;
     margin: 0 auto;
+    position: relative; /* stays above scan */
+    z-index: 1;
 }
 
 .command-header h1 {
@@ -385,4 +416,12 @@ footer {
     color: #6e859c;
     font-size: 13px;
     letter-spacing: 0.3px;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .command-header::after {
+        animation: none !important;
+        opacity: 0 !important;
+    }
 }
