@@ -12,11 +12,10 @@
     host.innerHTML = await res.text();
   }
 
-  // Inject shared header + footer
   await inject("#site-header", "header.html");
   await inject("#site-footer", "footer.html");
 
-  // Apply per-page title/subtitle (optional)
+  // Per-page title/subtitle (optional)
   const titleMeta = document.querySelector('meta[name="pp:title"]');
   const subtitleMeta = document.querySelector('meta[name="pp:subtitle"]');
 
@@ -30,19 +29,27 @@
     if (s) s.textContent = subtitleMeta.content;
   }
 
-  // ✅ Auto-highlight active nav link (works with injected header.html)
-  const path = window.location.pathname.split("/").pop() || "index.html";
+  // Auto-active nav link (for injected header pages)
+  try {
+    const path = window.location.pathname;
+    const current = path.split("/").pop() || "index.html";
 
-  const navLinks = document.querySelectorAll(".command-nav a");
-  navLinks.forEach((a) => {
-    // remove any previous state
-    a.removeAttribute("aria-current");
-    a.classList.remove("active");
+    const nav = document.querySelector(".command-nav");
+    if (nav) {
+      const links = nav.querySelectorAll("a[href]");
+      links.forEach(a => a.removeAttribute("aria-current"));
 
-    const href = (a.getAttribute("href") || "").split("?")[0];
-    if (href === path) {
-      a.setAttribute("aria-current", "page");
-      a.classList.add("active");
+      links.forEach(a => {
+        const href = a.getAttribute("href");
+        if (!href) return;
+
+        const hrefFile = href.split("/").pop();
+        if (hrefFile === current) {
+          a.setAttribute("aria-current", "page");
+        }
+      });
     }
-  });
+  } catch (e) {
+    console.warn("Nav active state failed:", e);
+  }
 })();
