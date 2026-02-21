@@ -17,29 +17,100 @@ body {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     background: #0f1419;
     color: #e6edf3;
-    line-height: 1.6;
+
+    /* slightly tighter + cleaner */
+    line-height: 1.55;
+    letter-spacing: 0.1px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* ===== SUBTLE ENTRANCE ANIMATIONS ===== */
+/* (Pure CSS. No JS. Respects reduced-motion.) */
+
+@keyframes ppFadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ppFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Header -> Nav -> Content staging */
+.command-header {
+    animation: ppFadeUp 520ms ease-out both;
+}
+
+.command-nav {
+    animation: ppFadeUp 520ms ease-out both;
+    animation-delay: 110ms;
+}
+
+/* Sections fade up in order */
+section {
+    animation: ppFadeUp 520ms ease-out both;
+    animation-delay: 180ms;
+}
+
+/* Dashboard tiles stagger */
+.dashboard-panel {
+    animation: ppFadeUp 520ms ease-out both;
+}
+
+.dashboard-panel:nth-child(1) { animation-delay: 220ms; }
+.dashboard-panel:nth-child(2) { animation-delay: 260ms; }
+.dashboard-panel:nth-child(3) { animation-delay: 300ms; }
+.dashboard-panel:nth-child(4) { animation-delay: 340ms; }
+.dashboard-panel:nth-child(5) { animation-delay: 380ms; }
+.dashboard-panel:nth-child(6) { animation-delay: 420ms; }
+
+/* Footer subtle fade */
+footer {
+    animation: ppFadeIn 520ms ease-out both;
+    animation-delay: 240ms;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto;
+    }
 }
 
 /* ===== COMMAND HEADER ===== */
 
 .command-header {
     background: #111820;
-    padding: 80px 20px;
+    padding: 84px 20px 74px;
     text-align: center;
     border-bottom: 1px solid #1f2a36;
+}
+
+.command-header .header-content {
+    max-width: 920px;
+    margin: 0 auto;
 }
 
 .command-header h1 {
     font-size: 42px;
     margin: 0;
     font-weight: 600;
-    letter-spacing: 1px;
+
+    /* slightly more “Apple tactical” */
+    letter-spacing: 0.6px;
+    line-height: 1.12;
 }
 
 .command-header p {
     margin-top: 12px;
+    margin-bottom: 0;
     color: #8aa0b6;
     font-size: 15px;
+    letter-spacing: 0.3px;
 }
 
 /* ===== NAVIGATION – COMMAND STRIP ===== */
@@ -89,31 +160,80 @@ body {
 /* ===== GENERAL SECTION ===== */
 
 section {
-    padding: 80px 25px;
-    max-width: 1200px;
+    padding: 72px 25px;
+    max-width: 1050px;
     margin: auto;
 }
 
+/* tighter, more premium heading rhythm */
 h2 {
     font-size: 24px;
-    margin-bottom: 25px;
+    margin: 0 0 18px;
     padding-bottom: 10px;
     border-bottom: 1px solid #243140;
     font-weight: 600;
+    letter-spacing: 0.4px;
+    line-height: 1.25;
+}
+
+h3 {
+    letter-spacing: 0.25px;
+    line-height: 1.25;
+}
+
+/* paragraph rhythm */
+section p {
+    margin: 14px 0;
+    color: #c6d2de;
+    max-width: 78ch; /* nicer reading width */
+}
+
+section p + p {
+    margin-top: 12px;
+}
+
+/* lists */
+ul {
+    margin: 16px 0 10px;
+    padding-left: 22px;
+    color: #c6d2de;
+}
+
+li {
+    margin: 10px 0;
+}
+
+/* “highlight callout” blocks (you already use this class in HTML) */
+.highlight {
+    margin: 18px 0 8px;
+    padding: 14px 16px;
+    border: 1px solid rgba(0, 194, 255, 0.22);
+    background: rgba(0, 194, 255, 0.05);
+    border-radius: 8px;
+    color: #d8e6f3;
+    line-height: 1.5;
 }
 
 /* ===== OPERATIONAL SUMMARY ===== */
 
 .operational-summary {
     text-align: center;
-    padding: 70px 20px;
-    max-width: 900px;
+    padding: 66px 20px;
+    max-width: 920px;
     margin: auto;
 }
 
+.operational-summary p {
+    max-width: 82ch;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .status-line {
-    margin-top: 25px;
-    font-size: 14px;
+    margin-top: 22px;
+    font-size: 13px;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
     color: #8aa0b6;
 }
 
@@ -144,10 +264,7 @@ h2 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 30px;
 
-    /* Visual spacing around tiles */
     padding: 80px 40px;
-
-    /* Reserve space for the divider line */
     padding-top: 130px;
 
     max-width: 1100px;
@@ -172,7 +289,6 @@ h2 {
 }
 
 /* Tablet */
-
 @media (max-width: 1000px) {
     .dashboard-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -180,8 +296,19 @@ h2 {
 }
 
 /* Mobile */
-
 @media (max-width: 650px) {
+    section {
+        padding: 58px 20px;
+    }
+
+    .command-header {
+        padding: 72px 18px 64px;
+    }
+
+    .command-header h1 {
+        font-size: 34px;
+    }
+
     .dashboard-grid {
         grid-template-columns: minmax(0, 1fr);
         padding: 60px 20px;
@@ -203,24 +330,24 @@ h2 {
     background: #141c24;
     padding: 28px;
     border: 1px solid #1f2a36;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: all 0.25s ease;
 }
 
 .dashboard-panel h3 {
     margin-top: 0;
     font-size: 18px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: #e6edf3;
 }
 
 .dashboard-panel p {
     color: #b8c4d1;
     font-size: 14px;
+    margin: 0;
 }
 
 /* Subtle shimmer scan */
-
 .dashboard-panel::after {
     content: "";
     position: absolute;
@@ -242,7 +369,6 @@ h2 {
 }
 
 /* Lift + glow */
-
 .dashboard-panel:hover {
     transform: translateY(-4px);
     box-shadow: 0 0 18px rgba(0, 194, 255, 0.15);
@@ -258,4 +384,5 @@ footer {
     border-top: 1px solid #1f2a36;
     color: #6e859c;
     font-size: 13px;
+    letter-spacing: 0.3px;
 }
