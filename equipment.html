@@ -2,27 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Paranormal Pro | Investigation Equipment</title>
+    <title>Investigation Equipment | Paranormal Pro</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Inter font (CSS uses Inter) -->
+    <!-- BUILD MARKER -->
+    <meta name="pp:build" content="equipment-v6-2026-02-21">
+
+    <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Failsafe (prevents white page if CSS fails) -->
-    <style>
-        body {
-            margin: 0;
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0f1419;
-            color: #e6edf3;
-            line-height: 1.6;
-        }
-    </style>
-
-    <!-- Main stylesheet (same folder as this file) -->
-    <link rel="stylesheet" href="./style.css?v=3">
+    <!-- Main stylesheet (cache-busted) -->
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 
 <body>
@@ -34,13 +26,13 @@
     </div>
 </header>
 
-<!-- ✅ CRITICAL FIX: nav MUST be class="command-nav" on every page -->
 <nav class="command-nav" aria-label="Primary">
     <a href="index.html">Home</a>
+    <a href="about.html">About</a>
     <a href="tools.html">Investigation Workflow</a>
     <a href="command-center.html">Command Center</a>
     <a href="environment.html">Environmental Intelligence</a>
-    <a href="equipment.html">Equipment</a>
+    <a href="equipment.html" aria-current="page">Equipment</a>
     <a href="analysis.html">Analysis Labs</a>
     <a href="ai.html">AI Assistant</a>
     <a href="reports.html">Reporting</a>
@@ -76,7 +68,7 @@
     </div>
 
     <div class="dashboard-panel">
-        <h3>Audio & EVP Capture</h3>
+        <h3>Audio &amp; EVP Capture</h3>
         <p>
             Timestamp-locked recordings with notes, location tagging, and investigation-phase association
             (walkthrough, baseline, active session, wrap-up).
