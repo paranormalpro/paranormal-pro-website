@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- BUILD MARKER -->
-    <meta name="pp:build" content="early-access-v9-2026-02-21">
+    <meta name="pp:build" content="early-access-v10-2026-02-21">
 
     <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -129,29 +129,6 @@
 </nav>
 
 <section>
-    <h2>Help Shape the Future of Investigation</h2>
-
-    <p>
-        Paranormal Pro is entering structured development and controlled field testing.
-    </p>
-
-    <div class="highlight">
-        We are inviting serious investigators and research teams
-        to participate in disciplined early access evaluation.
-    </div>
-
-    <p>Early access members will help refine:</p>
-
-    <ul>
-        <li>Investigation workflow structure</li>
-        <li>Environmental correlation systems</li>
-        <li>AI reasoning safeguards</li>
-        <li>Multi-device command synchronization</li>
-        <li>Reporting standards and classifications</li>
-    </ul>
-</section>
-
-<section>
     <h2>Request Early Access</h2>
 
     <div class="dashboard-panel email-panel">
@@ -163,23 +140,29 @@
 
         <div class="action-row">
             <a class="email-button"
-               href="mailto:paranormalsomerset@gmail.com?subject=Paranormal%20Pro%20—%20Early%20Access%20Request&body=Name:%0ATeam%20/%20Organization:%0ALocation:%0AYears%20Investigating:%0ATeam%20Size:%0APrimary%20Devices%20(iPhone/iPad/Mac):%0AEquipment%20Used:%0ATypes%20of%20Locations%20Investigated:%0AWhat%20you%20would%20like%20to%20evaluate:%0A">
+               href="mailto:paranormalsomerset@gmail.com?subject=Paranormal%20Pro%20—%20Early%20Access%20Request">
                 Request Early Access
             </a>
 
             <button class="copy-button" id="copyEmailBtn" type="button">
                 Copy Email Address
             </button>
+
+            <button class="copy-button" id="copyTemplateBtn" type="button">
+                Copy Intake Template
+            </button>
         </div>
 
         <div class="pp-muted">
-            If clicking the button asks you to “add an account,” your device doesn’t have an email app configured.
-            No problem — copy the email address below and message us from Gmail/Yahoo/whatever you use.
+            If your device asks you to add an account, simply copy the email and template below
+            and send your request from your preferred email provider.
         </div>
 
-        <div class="email-inline" id="emailText">paranormalsomerset@gmail.com</div>
+        <div class="email-inline" id="emailText">
+paranormalsomerset@gmail.com
+        </div>
 
-        <div class="intake-template">
+        <div class="intake-template" id="intakeTemplate">
 Name:
 Team / Organization:
 Location:
@@ -203,37 +186,42 @@ What you would like to evaluate:
 </footer>
 
 <script>
-    (function () {
-        const btn = document.getElementById("copyEmailBtn");
-        const text = document.getElementById("emailText");
+(function () {
+    function copyText(text, button) {
+        const original = button.textContent;
 
-        if (!btn || !text) return;
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "Copied";
+                setTimeout(() => button.textContent = original, 1200);
+            });
+        } else {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "absolute";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            button.textContent = "Copied";
+            setTimeout(() => button.textContent = original, 1200);
+        }
+    }
 
-        btn.addEventListener("click", async () => {
-            const email = text.textContent.trim();
+    const emailBtn = document.getElementById("copyEmailBtn");
+    const templateBtn = document.getElementById("copyTemplateBtn");
 
-            try {
-                if (navigator.clipboard && window.isSecureContext) {
-                    await navigator.clipboard.writeText(email);
-                } else {
-                    const ta = document.createElement("textarea");
-                    ta.value = email;
-                    ta.setAttribute("readonly", "");
-                    ta.style.position = "absolute";
-                    ta.style.left = "-9999px";
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(ta);
-                }
+    emailBtn.addEventListener("click", function () {
+        const email = document.getElementById("emailText").textContent.trim();
+        copyText(email, this);
+    });
 
-                btn.textContent = "Copied";
-                setTimeout(() => (btn.textContent = "Copy Email Address"), 1200);
-            } catch (e) {
-                alert("Copy failed. Email: " + email);
-            }
-        });
-    })();
+    templateBtn.addEventListener("click", function () {
+        const template = document.getElementById("intakeTemplate").textContent.trim();
+        copyText(template, this);
+    });
+})();
 </script>
 
 </body>
