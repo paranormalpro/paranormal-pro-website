@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- BUILD MARKER -->
-    <meta name="pp:build" content="early-access-v8-2026-02-21">
+    <meta name="pp:build" content="early-access-v9-2026-02-21">
 
     <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,20 +22,32 @@
             margin: 0 auto;
         }
 
-        .email-button {
-            display: inline-block;
+        .action-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
             margin-top: 18px;
+        }
+
+        .email-button,
+        .copy-button {
+            display: inline-block;
             padding: 14px 18px;
             border-radius: 10px;
-            border: 1px solid rgba(0, 194, 255, 0.55);
-            background: rgba(0, 194, 255, 0.10);
-            color: #ffffff;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
             font-size: 12px;
             text-decoration: none;
             transition: all 220ms ease;
+            cursor: pointer;
+        }
+
+        .email-button {
+            border: 1px solid rgba(0, 194, 255, 0.55);
+            background: rgba(0, 194, 255, 0.10);
+            color: #ffffff;
         }
 
         .email-button:hover {
@@ -43,6 +55,39 @@
             border-color: rgba(0, 194, 255, 0.75);
             background: rgba(0, 194, 255, 0.15);
             box-shadow: 0 0 0 1px rgba(0, 194, 255, 0.12), 0 0 22px rgba(0, 194, 255, 0.10);
+        }
+
+        .copy-button {
+            border: 1px solid rgba(159, 179, 200, 0.35);
+            background: rgba(255, 255, 255, 0.03);
+            color: #e6edf3;
+        }
+
+        .copy-button:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 194, 255, 0.35);
+            background: rgba(0, 194, 255, 0.06);
+            box-shadow: 0 0 0 1px rgba(0, 194, 255, 0.08), 0 0 18px rgba(0, 194, 255, 0.06);
+        }
+
+        .pp-muted {
+            color: #8aa0b6;
+            font-size: 13px;
+            line-height: 1.55;
+            margin-top: 12px;
+        }
+
+        .email-inline {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 194, 255, 0.18);
+            background: rgba(12, 17, 22, 0.55);
+            color: #cfe3f4;
+            font-size: 14px;
+            letter-spacing: 0.2px;
+            user-select: all;
         }
 
         .intake-template {
@@ -113,24 +158,26 @@
         <h3>Structured Email Intake</h3>
 
         <p>
-            To maintain investigative integrity and serious collaboration,
-            early access participation is reviewed directly.
+            Early access participation is reviewed directly to maintain investigative integrity.
         </p>
 
-        <a class="email-button"
-           href="mailto:paranormalsomerset@gmail.com
-?subject=Paranormal%20Pro%20—%20Early%20Access%20Request
-&body=Name:%0A
-Team%20/%20Organization:%0A
-Location:%0A
-Years%20Investigating:%0A
-Team%20Size:%0A
-Primary%20Devices%20(iPhone/iPad/Mac):%0A
-Equipment%20Used:%0A
-Types%20of%20Locations%20Investigated:%0A
-What%20you%20would%20like%20to%20evaluate:%0A">
-            Request Early Access
-        </a>
+        <div class="action-row">
+            <a class="email-button"
+               href="mailto:paranormalsomerset@gmail.com?subject=Paranormal%20Pro%20—%20Early%20Access%20Request&body=Name:%0ATeam%20/%20Organization:%0ALocation:%0AYears%20Investigating:%0ATeam%20Size:%0APrimary%20Devices%20(iPhone/iPad/Mac):%0AEquipment%20Used:%0ATypes%20of%20Locations%20Investigated:%0AWhat%20you%20would%20like%20to%20evaluate:%0A">
+                Request Early Access
+            </a>
+
+            <button class="copy-button" id="copyEmailBtn" type="button">
+                Copy Email Address
+            </button>
+        </div>
+
+        <div class="pp-muted">
+            If clicking the button asks you to “add an account,” your device doesn’t have an email app configured.
+            No problem — copy the email address below and message us from Gmail/Yahoo/whatever you use.
+        </div>
+
+        <div class="email-inline" id="emailText">paranormalsomerset@gmail.com</div>
 
         <div class="intake-template">
 Name:
@@ -154,6 +201,40 @@ What you would like to evaluate:
 <footer>
     Paranormal Pro &copy; 2026
 </footer>
+
+<script>
+    (function () {
+        const btn = document.getElementById("copyEmailBtn");
+        const text = document.getElementById("emailText");
+
+        if (!btn || !text) return;
+
+        btn.addEventListener("click", async () => {
+            const email = text.textContent.trim();
+
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(email);
+                } else {
+                    const ta = document.createElement("textarea");
+                    ta.value = email;
+                    ta.setAttribute("readonly", "");
+                    ta.style.position = "absolute";
+                    ta.style.left = "-9999px";
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(ta);
+                }
+
+                btn.textContent = "Copied";
+                setTimeout(() => (btn.textContent = "Copy Email Address"), 1200);
+            } catch (e) {
+                alert("Copy failed. Email: " + email);
+            }
+        });
+    })();
+</script>
 
 </body>
 </html>
