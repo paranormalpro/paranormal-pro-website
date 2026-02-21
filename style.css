@@ -87,11 +87,9 @@ body {
 }
 
 /* ===== NAVIGATION – COMMAND STRIP ===== */
-
 /*
-    ✅ FIX: Your nav was "cut off" because it was single-line (nowrap)
-    and relied on horizontal scrolling. Now it wraps cleanly on desktop
-    AND still allows horizontal scrolling on very small screens if needed.
+    ✅ Desktop: wraps cleanly (no cutoff)
+    ✅ Mobile: one-line scroll (no mega-tall nav)
 */
 
 .command-nav {
@@ -123,7 +121,7 @@ body {
     border-radius: 6px;
     border: 1px solid transparent;
 
-    transition: all 0.25s ease;
+    transition: transform 0.22s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
 }
 
 /* Hover */
@@ -142,7 +140,7 @@ body {
     box-shadow: 0 0 14px rgba(0, 194, 255, 0.12);
 }
 
-/* Mobile: keep it one-line scrollable to avoid mega-tall nav */
+/* Mobile: keep it one-line scrollable */
 @media (max-width: 700px) {
     .command-nav {
         flex-wrap: nowrap;
@@ -157,25 +155,30 @@ body {
     }
 }
 
-/* ===== GENERAL SECTION ===== */
+/* ===== SITE-WIDE ENTRANCE ANIMATION ===== */
+/* Apply only to sections and cards (avoid double-animating operational summary + cards) */
+
+@keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
 
 section {
     padding: 80px 25px;
     max-width: 1200px;
     margin: auto;
-}
 
-/* Subtle site-wide entrance animations */
-section {
     opacity: 0;
     transform: translateY(10px);
     animation: fadeUp 520ms ease forwards;
     animation-delay: 120ms;
 }
 
-@keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-}
+/* Make sure nested sections don’t feel too uniform */
+section:nth-of-type(2) { animation-delay: 160ms; }
+section:nth-of-type(3) { animation-delay: 200ms; }
+section:nth-of-type(4) { animation-delay: 240ms; }
+section:nth-of-type(5) { animation-delay: 280ms; }
+section:nth-of-type(6) { animation-delay: 320ms; }
 
 h2 {
     font-size: 24px;
@@ -196,17 +199,13 @@ h2 {
 }
 
 /* ===== OPERATIONAL SUMMARY ===== */
+/* Keep this simple; don’t re-animate separately (section already animates) */
 
 .operational-summary {
     text-align: center;
     padding: 70px 20px;
     max-width: 900px;
     margin: auto;
-
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeUp 520ms ease forwards;
-    animation-delay: 80ms;
 }
 
 .status-line {
@@ -310,7 +309,7 @@ h2 {
     animation-delay: 180ms;
 }
 
-/* Subtle stagger for the grid on home (and any other grid pages) */
+/* Stagger for grid cards */
 .dashboard-grid .dashboard-panel:nth-child(1) { animation-delay: 160ms; }
 .dashboard-grid .dashboard-panel:nth-child(2) { animation-delay: 210ms; }
 .dashboard-grid .dashboard-panel:nth-child(3) { animation-delay: 260ms; }
