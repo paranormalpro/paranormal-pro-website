@@ -124,10 +124,16 @@ h2 {
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    /* ✅ FIX: flexible 3-up layout that won’t “drop” a tile unexpectedly */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
     gap: 30px;
     padding: 80px 40px;
-    max-width: 1100px;
+
+    /* ✅ Slightly wider so 3 columns fit more reliably */
+    max-width: 1200px;
+
     margin: auto;
     position: relative;
 }
