@@ -125,40 +125,39 @@ h2 {
 .dashboard-grid {
     display: grid;
 
-    /* ✅ FIX: flexible 3-up layout that won’t “drop” a tile unexpectedly */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Keep your intended 3-up layout on desktop */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     gap: 30px;
     padding: 80px 40px;
-
-    /* ✅ Slightly wider so 3 columns fit more reliably */
-    max-width: 1200px;
-
+    max-width: 1100px;
     margin: auto;
     position: relative;
 }
 
-/* Divider line above grid */
-
+/* Divider line above grid
+   ✅ FIX: Make the pseudo-element span ALL columns so it doesn't "steal" a grid cell */
 .dashboard-grid::before {
     content: "";
     display: block;
     height: 1px;
     width: 100%;
+    grid-column: 1 / -1;      /* ✅ critical fix */
     background: linear-gradient(
         to right,
         transparent,
         rgba(0, 194, 255, 0.3),
         transparent
     );
-    margin-bottom: 50px;
+    margin: 0;                /* ✅ remove margin that can cause weird grid flow */
+    padding-bottom: 50px;     /* ✅ creates the spacing below the divider cleanly */
 }
 
 /* Tablet */
 
 @media (max-width: 1000px) {
     .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -166,7 +165,7 @@ h2 {
 
 @media (max-width: 650px) {
     .dashboard-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         padding: 60px 20px;
     }
 }
