@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- BUILD MARKER -->
-    <meta name="pp:build" content="tools-v6-2026-02-21">
+    <meta name="pp:build" content="tools-v7-2026-02-21">
+
+    <!-- Per-page header text (used by includes.js after header loads) -->
+    <meta name="pp:title" content="Investigation Workflow">
+    <meta name="pp:subtitle" content="Structured. Guided. Professional.">
 
     <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,32 +18,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- Main stylesheet (cache-busted) -->
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 
 <body>
 
-<header class="command-header">
-    <div class="header-content">
-        <h1>Investigation Workflow</h1>
-        <p>Structured. Guided. Professional.</p>
-    </div>
-</header>
-
-<nav class="command-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="tools.html" aria-current="page">Investigation Workflow</a>
-    <a href="command-center.html">Command Center</a>
-    <a href="environment.html">Environmental Intelligence</a>
-    <a href="equipment.html">Equipment</a>
-    <a href="analysis.html">Analysis Labs</a>
-    <a href="ai.html">AI Assistant</a>
-    <a href="reports.html">Reporting</a>
-    <a href="standards.html">Standards & Ethics</a>
-    <a href="advisory-board.html">Advisory Board</a>
-    <a href="early-access.html">Early Access</a>
-</nav>
+<!-- Shared header/nav injected here -->
+<div id="site-header"></div>
 
 <section>
     <h2>1. Structured Case File Creation</h2>
@@ -118,9 +103,11 @@
     </div>
 </section>
 
-<footer>
-    Paranormal Pro &copy; 2026
-</footer>
+<!-- Shared footer injected here -->
+<div id="site-footer"></div>
+
+<!-- Include injector -->
+<script src="includes.js"></script>
 
 </body>
 </html>
