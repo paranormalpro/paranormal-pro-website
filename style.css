@@ -63,10 +63,27 @@ body {
     letter-spacing: 1.5px;
     text-transform: uppercase;
     transition: all 0.25s ease;
+
+    /* subtle “command chip” feel */
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
 }
 
+/* Hover */
 .command-nav a:hover {
     color: #ffffff;
+    border-color: rgba(0, 194, 255, 0.25);
+    background: rgba(0, 194, 255, 0.04);
+}
+
+/* ✅ Active page highlight (use aria-current="page" OR class="active") */
+.command-nav a[aria-current="page"],
+.command-nav a.active {
+    color: #ffffff;
+    border-color: rgba(0, 194, 255, 0.70);
+    background: rgba(0, 194, 255, 0.08);
+    box-shadow: 0 0 14px rgba(0, 194, 255, 0.12);
 }
 
 /* ===== GENERAL SECTION ===== */
@@ -127,28 +144,25 @@ h2 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 30px;
 
-    /* This padding is the visual spacing around the tiles */
+    /* Visual spacing around tiles */
     padding: 80px 40px;
 
-    /* ✅ FIX: reserve space at the top INSIDE the grid for the divider line */
+    /* Reserve space for the divider line */
     padding-top: 130px;
 
     max-width: 1100px;
     margin: auto;
-
-    /* ✅ Needed so the absolute divider positions relative to this container */
     position: relative;
 }
 
-/* ✅ FIX: Divider is no longer a grid item — it cannot steal a grid cell */
+/* Divider line above grid (absolute so it never steals a grid cell) */
 .dashboard-grid::before {
     content: "";
     position: absolute;
-    top: 80px;               /* aligns with the original "above grid" feel */
+    top: 80px;
     left: 40px;
     right: 40px;
     height: 1px;
-
     background: linear-gradient(
         to right,
         transparent,
