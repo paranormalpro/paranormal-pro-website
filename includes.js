@@ -12,12 +12,11 @@
     host.innerHTML = await res.text();
   }
 
-  // Inject shared header/footer
+  // Inject shared header + footer
   await inject("#site-header", "header.html");
   await inject("#site-footer", "footer.html");
 
-  // Optional per-page title/subtitle without duplicating header markup
-  // Use <meta name="pp:title" content="..."> and <meta name="pp:subtitle" content="...">
+  // Apply per-page title/subtitle (optional)
   const titleMeta = document.querySelector('meta[name="pp:title"]');
   const subtitleMeta = document.querySelector('meta[name="pp:subtitle"]');
 
@@ -31,42 +30,19 @@
     if (s) s.textContent = subtitleMeta.content;
   }
 
-  // ✅ Auto-highlight active navigation link
-  // Works for GitHub Pages and local file paths
-  (function setActiveNav() {
-    const nav = document.querySelector(".command-nav");
-    if (!nav) return;
+  // ✅ Auto-highlight active nav link (works with injected header.html)
+  const path = window.location.pathname.split("/").pop() || "index.html";
 
-    const links = Array.from(nav.querySelectorAll("a[href]"));
-    if (!links.length) return;
+  const navLinks = document.querySelectorAll(".command-nav a");
+  navLinks.forEach((a) => {
+    // remove any previous state
+    a.removeAttribute("aria-current");
+    a.classList.remove("active");
 
-    // Current page filename (e.g., "about.html")
-    const path = window.location.pathname || "";
-    let current = path.split("/").pop();
-    if (!current || current === "") current = "index.html";
-
-    // If URL ends with "/" (GitHub Pages root), treat as index.html
-    if (path.endsWith("/")) current = "index.html";
-
-    links.forEach((a) => {
-      a.removeAttribute("aria-current");
-      a.classList.remove("active");
-    });
-
-    // Match by filename only
-    const match = links.find((a) => {
-      const href = (a.getAttribute("href") || "").split("#")[0].split("?")[0];
-      const hrefFile = href.split("/").pop();
-      return hrefFile === current;
-    });
-
-    if (match) {
-      match.setAttribute("aria-current", "page");
-      match.classList.add("active");
+    const href = (a.getAttribute("href") || "").split("?")[0];
+    if (href === path) {
+      a.setAttribute("aria-current", "page");
+      a.classList.add("active");
     }
-  })();
-
-  // ✅ Signal "ready" so CSS entrance animations can fire after header/footer load
-  // (We'll use this in style.css with body.pp-ready …)
-  document.body.classList.add("pp-ready");
+  });
 })();
